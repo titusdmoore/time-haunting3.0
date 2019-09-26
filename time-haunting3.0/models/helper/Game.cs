@@ -6,7 +6,7 @@ namespace time_haunting3._0.models.helper {
     class Game {
         public bool Active { get; set; }
         public Player CurrentPlayer { get; set; }
-        public Item[] Items { get; set; }
+        public Item[] Items { get; set; } 
         //TODO Add Mobs
 
         public Game () { }
