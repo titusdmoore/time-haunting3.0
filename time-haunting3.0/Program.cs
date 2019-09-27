@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using time_haunting3._0.models;
 using time_haunting3._0.models.helper;
 
 namespace time_haunting3._0 {
@@ -17,13 +19,37 @@ namespace time_haunting3._0 {
                     "p" => false,
                     "c" => false,
                     "e" => false,
+                    "g" => true,
                     _ => true,
                 };
+                if (_in == "g") {
+                    Display.EasterEgg();
+                    Console.ReadLine();
+                }
                 Console.Clear();
             } while (menu);
 
+            Game instanceGame = null;
+            Player instancePlayer = null;
+            switch (_in) {
+                case "p":
+                    instancePlayer = GameController.CreatePlayer();
+                    instanceGame = GameController.NewGame(instancePlayer);
+                    break;
 
+                default:
+                    break;
+            }
 
+            while (instanceGame.Active) {
+                Display.Home();
+                var instanceMonster = instanceGame.Mobs.Where(m => m.Name == "Ogre").FirstOrDefault();
+                instanceGame.CurrentMob = instanceMonster;
+                Console.WriteLine($"Hello, {instanceGame.CurrentPlayer.Name}. You walk into a dark room and meet a monster called {instanceMonster.Name}.");
+                GameController.Controls(instanceGame);
+                               
+                instanceGame.Active = false;
+            }
 
         }
     }
